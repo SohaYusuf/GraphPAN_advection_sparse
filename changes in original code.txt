@@ -1,0 +1,20 @@
+In geo.py:
+
+1. comment 61,62 lines
+
+# if L.requires_grad:
+#     assert not sparse, "Gradient computation not supported for sparse matrices"
+
+2. change line 306 to:
+
+A = torch.sparse_coo_tensor(data.edge_index, data.edge_attr[:, 0])
+
+3. change lines 221-224 to:
+
+output=output
+A = torch.sparse_coo_tensor(data.edge_index, data.edge_attr[:, 0])
+l = loss_chol(output, A, sparse=True)
+
+4. change line 47 to:
+
+P = torch.sparse.linalg.solve_triangular(P, torch.eye(P.size()[0], device=P.device, requires_grad=False), upper=False)
