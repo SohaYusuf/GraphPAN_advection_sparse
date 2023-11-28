@@ -1,13 +1,18 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
 import argparse
 import pprint
 from neuralif.geo import main, device
+import numpy as np
+import random
 
 
 def argparser():
     parser = argparse.ArgumentParser()
     
     # Training parameters
-    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--seed", type=int, default=1234)
     parser.add_argument("--n", type=int, default=100)
     parser.add_argument("--training_samples", type=int, default=100)
     parser.add_argument("--batch_size", type=int, default=1)
@@ -41,6 +46,7 @@ def argparser():
     return parser.parse_args()
 
 if __name__ == "__main__":
+
     args = argparser()
 
     listt = vars(args)

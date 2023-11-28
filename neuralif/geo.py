@@ -18,11 +18,11 @@ from neuralif.paths import *
 import scipy.sparse.linalg
 import scipy.sparse
 import torch.sparse
+import random
 
 # Ignore pytorch warnings
 import warnings
 warnings.filterwarnings('ignore', '.*Sparse CSR tensor support is in beta state.*')
-
 
 def kA_bound(cond, k):
     return 2 * ((torch.sqrt(cond) - 1) / (torch.sqrt(cond) + 1)) ** k
@@ -340,6 +340,7 @@ def main(config):
     
     # global seed-ish
     torch_geometric.seed_everything(config["seed"])
+    set_random_seed(config["seed"])
     
     # command line arguments
     args = {k: config[k] for k in ["latent_size", "num_layers", "message_passing_steps", 

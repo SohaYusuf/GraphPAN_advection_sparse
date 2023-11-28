@@ -10,6 +10,7 @@ import torch
 import torch_geometric
 from torch_sparse import SparseTensor, spadd, spspmm
 import scipy.stats as st
+import random
 
 
 # Global variables
@@ -24,6 +25,17 @@ torch.set_default_dtype(ddtype)
 
 # Folder to save the results to
 folder = "results/" + datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+
+def set_random_seed(random_seed):
+        torch.manual_seed(random_seed)
+        torch.cuda.manual_seed(random_seed)
+        torch.cuda.manual_seed_all(random_seed)  # if use multi-GPU
+
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+
+        np.random.seed(random_seed)
+        random.seed(random_seed)
 
 
 class ToLowerTriangular(torch_geometric.transforms.BaseTransform):
